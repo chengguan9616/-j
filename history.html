@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin:0px;
+            position: relative;
+        }
+        .header{
+            width:7.5rem;
+            height:2.75rem;
+        }
+
+
+        .wrap{
+            width:100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin:10px;
+            box-sizing: border-box;
+            font-size: 0.5rem;
+            border-bottom: 1px solid #000;
+        }
+
+        span{
+            font-size: 0.4rem;
+        }
+        .list{
+            width:1.0rem;
+            height:1.0rem;
+            line-height: 1.0rem;
+            margin-right: 0.2rem;
+            margin-top: 0.2rem;
+            text-align: center;
+            background:blue;
+            color:#fff;
+            font-size: 0.5rem;
+            cursor: pointer;
+            border-radius: 0.2rem;
+        }
+
+        .active{
+            background:skyblue;
+        }
+
+        .reback{
+            position: fixed;
+            right:0.02rem;
+            bottom:0rem;
+            font-size: 0.2rem;
+            text-align: center;
+            display: inline-block;
+        }        
+    </style>
+    <script>
+        (function(doc,win,designWidth){
+             var html = doc.documentElement;
+             var refreshRem = function(){
+                 var clientWidth = html.clientWidth;
+                 if(clientWidth >= designWidth){
+                    html.style.fontSize = 100 * (clientWidth / designWidth) + "px";
+                    //  html.style.fontSize = "100px";
+                 }else{
+                     html.style.fontSize = 100 * (clientWidth / designWidth) + "px";
+                 }
+             };
+             doc.addEventListener("DOMContentLoaded",refreshRem);   
+        })(document, window, 750);
+    </script>
+</head>
+<body>
+    <span>单选：</span>
+    <div class="wrap0 wrap">
+        
+  
+        
+    </div>
+    <span>多选：</span>
+    <div class="wrap1 wrap">
+        
+
+        
+    </div>
+    <span>判断:</span>
+    <div class="wrap2 wrap">
+        
+  
+        
+    </div>
+    <span>案例:</span>
+    <div class="wrap3 wrap">
+        
+  
+        
+    </div>
+    <a class="reback" href="./index.html">回到首页</a>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+
+                    function unique(arr){            
+                            for(var i=0; i<arr.length; i++){
+                                for(var j=i+1; j<arr.length; j++){
+                                    if(arr[i]==arr[j]){         //第一个等同于第二个，splice方法删除第二个
+                                        arr.splice(j,1);
+                                        j--;
+                                    }
+                                }
+                            }
+                    return arr;
+                    }
+
+
+
+                    let obj = {};
+                    function localcon () {
+                        //  localhistory = JSON.parse(localStorage.getItem("pdhistory"));
+                        obj["pderror"] = unique(JSON.parse(localStorage.getItem("pdhistory")));
+                        obj["error"] =  unique(JSON.parse(localStorage.getItem("history")));
+                        obj["duoerror"] =  unique(JSON.parse(localStorage.getItem("historyduo")));
+                        obj["anerror"] = unique(JSON.parse(localStorage.getItem("anhistory")));
+                        
+                    }    
+                    localcon();
+                    function show () {
+                        for(var i = 0; i < obj["error"].length; i ++){
+                          $(".wrap0").append(`<div class="list list0">${obj["error"][i]}</div>`);
+                        }
+                        for(var i = 0; i < obj["duoerror"].length; i ++){
+                          $(".wrap1").append(`<div class="list list1">${obj["duoerror"][i]}</div>`);
+                        }
+                        for(var i = 0; i < obj["pderror"].length; i ++){
+                          $(".wrap2").append(`<div class="list list2">${obj["pderror"][i]}</div>`);
+                        }
+                        for(var i = 0; i < obj["anerror"].length; i ++){
+                          $(".wrap3").append(`<div class="list list2">${obj["anerror"][i]}</div>`);
+                        }
+                    }
+                    show();
+
+
+        // for(var i = 0; i < arrlist.length; i++){
+        //     $(".wrap").append(`<div class="list">${i}</div>`);
+        // }
+
+        $(".list").click(function(e){
+            if($(e.target).hasClass("list0")){
+                window.location.href = "./ti.html?num=" + parseInt(e.target.innerText);
+            }else if($(e.target).hasClass("list1")){
+                window.location.href = "./tiduo.html?num=" + parseInt(e.target.innerText);
+            }else{
+                window.location.href = "./tipanduan.html?num=" + parseInt(e.target.innerText);
+            }
+        })
+
+
+ </script>
+</body>
+</html>

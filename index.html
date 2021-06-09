@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        .header {
+            width: 7.5rem;
+            height: 2.75rem;
+        }
+
+        .header img {
+            display: block;
+            width: 100%;
+        }
+
+        .content {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 7.5rem;
+            height: 9.5rem;
+        }
+
+        .list {
+            display: block;
+            width: 40%;
+            height: 2.4rem;
+            /* border:1px solid #000; */
+            line-height: 2.4rem;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 0.2rem;
+            background: blue;
+            color: #fff;
+        }
+        #lianxi{
+            color:#000;
+            font-size: 0.5rem;
+            text-align: center;
+            width:100%;
+        }
+    </style>
+    <script>
+        (function (doc, win, designWidth) {
+            var html = doc.documentElement;
+            var refreshRem = function () {
+                var clientWidth = html.clientWidth;
+                if (clientWidth >= designWidth) {
+                    html.style.fontSize = 100 * (clientWidth / designWidth) + "px";
+                    //  html.style.fontSize = "100px";
+                } else {
+                    html.style.fontSize = 100 * (clientWidth / designWidth) + "px";
+                }
+            };
+            doc.addEventListener("DOMContentLoaded", refreshRem);
+        })(document, window, 750);
+    </script>
+</head>
+
+<body>
+    <div class="header"><img src="./logo.jpg" alt=""></div>
+    <div class="content">
+        <a class="list" href="./danxuan.html">单选题</a>
+        <a class="list" href="./duoxuan.html">多选题</a>
+        <a class="list" href="./panduan.html">判断题</a>
+        <a class="list" href="./an.html">案例题</a>
+        <a class="list" href="./error.html">错题本</a>
+        <a class="list" href="./history.html">已做题目</a>
+    </div>
+    <div id="lianxi">联系我们</div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function unique(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                for (var j = i + 1; j < arr.length; j++) {
+                    if (arr[i] == arr[j]) { //第一个等同于第二个，splice方法删除第二个
+                        arr.splice(j, 1);
+                        j--;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        let obj = {};
+
+        function localcon() {
+            //  localhistory = JSON.parse(localStorage.getItem("pdhistory"));
+            obj["pderror"] = unique(JSON.parse(localStorage.getItem("pderror")));
+            obj["error"] = unique(JSON.parse(localStorage.getItem("error")));
+            obj["duoerror"] = unique(JSON.parse(localStorage.getItem("errorduo")));
+            obj["anerror"] = unique(JSON.parse(localStorage.getItem("anerror")));
+        }
+        localcon();
+        let errorlength = obj["pderror"].length + obj["error"].length + obj["duoerror"].length +  obj["anerror"].length;
+
+        $(".list").eq(4).text("错题本" + errorlength);
+
+        let obj2 = {};
+
+        function localcon2() {
+            //  localhistory = JSON.parse(localStorage.getItem("pdhistory"));
+            obj2["pderror"] = unique(JSON.parse(localStorage.getItem("pdhistory")));
+            obj2["error"] = unique(JSON.parse(localStorage.getItem("history")));
+            obj2["duoerror"] = unique(JSON.parse(localStorage.getItem("historyduo")));
+            obj2["anerror"] = unique(JSON.parse(localStorage.getItem("anhistory")));
+        }
+        localcon2();
+        let errorlength23 = obj2["pderror"].length + obj2["error"].length + obj2["duoerror"].length + obj2["anerror"].length;
+        $(".list").eq(5).text("已做题目" + errorlength23);
+        $("#lianxi").click(function(){
+            alert("920943778@qq.com");
+        })
+    </script>
+</body>
+
+</html>
