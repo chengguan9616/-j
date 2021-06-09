@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            position: relative;
+        }
+        .ti{
+            width:7.5rem;
+            font-size: 0.5rem;
+        }
+        .xuan{
+            width:7.5rem;
+            font-size: 0.5rem;
+            display:flex;
+            justify-content: start;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .xuan > div{
+            width:100%;
+            cursor: pointer;
+        }
+        .result{
+            margin-top: 0.2rem;
+            width:7.5rem;
+            font-size: 0.6rem;
+        }
+        .submit{
+            margin-top:0.1rem;
+            font-size: 0.6rem;
+            background:blue;
+            color:#fff;
+            text-align: center;
+            font-size: 0.5rem;
+            margin:0 auto;
+            margin-top:1.2rem;
+            width:5.5rem;
+            /* display: none; */
+            border-radius: 0.1rem;
+            cursor: pointer;
+        }
+
+        .result > span{
+            margin-right:0.2rem;
+        }
+        .red{
+            color:#f00;
+        }
+        .green{
+            color:#0f0;
+        }
+        .orange{
+            color:orange;
+        }
+        .next{
+            background:blue;
+            color:#fff;
+            text-align: center;
+            font-size: 0.5rem;
+            margin:0 auto;
+            margin-top:1.2rem;
+            width:5.5rem;
+            display: none;
+            border-radius: 0.1rem;
+            cursor: pointer;
+        }
+
+        .show{
+            display: block;
+        }
+
+        .reback{
+            position: fixed;
+            width:100%;    
+            bottom:0rem;
+            font-size: 0.2rem;
+            text-align: center;
+            display: inline-block;
+        }
+    </style>
+        <script>
+            (function(doc,win,designWidth){
+                 var html = doc.documentElement;
+                 var refreshRem = function(){
+                     var clientWidth = html.clientWidth;
+                     if(clientWidth >= designWidth){
+                        html.style.fontSize = 100 * (clientWidth / designWidth) + "px";
+                        //  html.style.fontSize = "100px";
+                     }else{
+                         html.style.fontSize = 100 * (clientWidth / designWidth) + "px";
+                     }
+                 };
+                 doc.addEventListener("DOMContentLoaded",refreshRem);   
+            })(document, window, 750);
+        </script>
+</head>
+
+<body>
+
+    <div class="ti"></div>
+    <div class="xuan"></div>
+    <div class="submit">提交答案</div>
+    <div class="result"><span class="re1"></span><span class="re2"></span></div>
+    <div class="next">下一题</div>
+    <a class="reback" href="./index.html">回到首页</a>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        var panduanlist = [
+                        {
+                            "que":"送电操作顺序为：总配电箱→开关箱→分配电箱。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"氧气瓶和乙炔瓶的工作间距不应大于5m。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"施工单位负责人是施工项目安全生产的第一责任者，也必须持证上岗，加强对队伍的培训，使安全管理规范化。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"土方填方的边坡坡度应根据填方高度、土的种类和其重要性确定。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"模板工程的施工方案经任一项目工作人员审批。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"法人不能自然产生，它的产生必须经过法定的程序。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"井点回灌是在井点降水的同时，将抽出的地下水（或工业水），通过回灌井点持续地在灌入地基土层内，使降水井点的影响半径不超过回灌井点的范围。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"法人是建设工程活动中最主要的主体。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"触电事故的发生没有明显的季节性。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"宪法是具有最高法律效力的根本大法，具有最高的法律效力。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"作业人员在拆除模板过程中，如发现已灌注混凝土有影响结构安全的质量问题时，继续拆除，再报告施工员。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"需要三相四线制配电的电缆线路必须采用五芯电缆。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"汽车式起重机可以直接开动油泵，不需要使发动机低速运转一段时间。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"对于施工升降机的安全使用，可以用行程限位开关作为停止运行的控制开关。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"对模板的要求是要保证结构或结构形状和尺寸及相互位置的准确。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"爆破作业不受天气条件所限制。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"高大模板支撑系统拆除时，可先将杆件抛掷地面后按规格分类均匀堆放。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"企业不符合要求，安全生产条件的，不予颁发安全生产许可证，书面通知企业并说明理由。企业自接受到通知之日起应当进行整改，整改合格后方可再次提出申请。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"拆除电梯井及大型空洞模板时，下层必须支搭安全网等可靠防坠落措施。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"密排桩较疏排桩受力性能差，若无防水抗渗措施，则不能止水。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"如安全网的贮存期超过2年，应按0.2‰抽样，不足1000张时抽样2张进行耐冲击性能测试，测试合格后方可销售使用。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"凡是在我国国内生产销售的PPE，按规定应具备“三证”，即生产许可证、产品合格证、安全鉴定证。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"《建设工程安全生产管理条例》中规定，市级以上地方人民政府建设行政主管部门对本行政区域内的建设工程安全生产实施监督管理。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"指令标志的含义是强制人们必须做出某种动作或采用防范措施的图形标志。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"工地应尽量做到绿化，尤其在市区主要路段的工地首先应该做到。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"搭设脚手架时，地面上的配合人员应避开可能落物的区域。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"建筑构件的燃烧性能等级为B级。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"结构中心筑岛法基坑支护，中心岛部分的土方开挖必须待围护墙的强度达到设计要求后才能进行。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"因生产工艺上要求必须连续作业或者特殊需要，确需在23时至次日7时期间进行施工的，建设单位和施工单位应当在施工前到工程所在地的区、县建设行政主管部门提出申请，经批准后方可进行夜间施工。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"地下水控制应根据工程地质情况、基坑周边环境、支护结构形式选用截水、降水、集水明排或其组合的技术方案。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"门式钢管脚手架，在顶层、连墙件设置层不是必须设置。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"安全标志牌的平面与视线夹角应接近90°。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"截水帷幕目前常用的形式有注浆法、旋喷法、深层搅拌水泥土桩挡墙等。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"施工现场停、送电的操作顺序是：送电时，分配电箱→总配电箱→开关箱；停电时，开关箱→分配电箱→总配电箱。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"安全技术交底的内容应包括模板支撑工程工艺、工序、作业要点和搭设安全技术要求等内容，无需做好记录。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"装载机停车时，应使内燃机转速逐步降低，不得突然熄火。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"开挖深度为5m的基坑的土方开挖工程不属于危险性较大的分部分项工程范围。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"焊接、切割、烘烤或加热等动火作业前，应对作业现场的易燃、可燃物进行清理。作业现场及其附近无法移走的可燃物，应采用不燃材料对其覆盖或隔离。",
+"list":"A.正确 B.错误",
+"answ":"A"    
+                        },
+                        {
+                            "que":"建筑施工企业如果经济状况不好，可以暂停给从事危险作业的职工办理意外伤害险，等经济条件好转后再恢复。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"在软土地区开挖时深度浅时，一般可边开挖边用井点降水进行排水。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"施工单位不得在尚未竣工的建筑物内设置员工集体宿舍。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"生产经营单位及其主要负责人未履行事故隐患排查治理职责，导致发生生产安全事故的，依法给予行政处罚。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"项目安全生产标准化的评定结果为“优良”、“合格”及“不合格”三个等级。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"设计文件架构，是按照安全专项施工方案的文本格式，从安全专项施工方案的结构框架进行设计，确定结构层次，编写目录和内容提纲。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"汽车式起重机的四个支腿是保证起重机稳定性的关键。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"施工企业安全生产条件按法律法规、施工现场安全管理、安全技术管理三部分进行考核。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"挖掘机作业时，应保持水平位置，将行走机构制动住，并将履带或轮胎楔紧。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"一般的塔式起重机的回转半径在30～60m左右。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"二级动火作业由所在工地负责人填写动火申请表，编制安全技术措施方案，报本单位主管部门审查批准后，方可动火。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"室外消火栓应沿消防车道或堆料场内交通道路的边缘设置，消火栓之间的距离不应大于100m。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"严禁谎报火警。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"回灌井点就以一道隔水帷幕阻止回灌井点外侧的建筑物下的地下水流失，使地下水位基本保持不变，土层压力仍处于原始平衡状态，从而可有效地防止降水井点对周围建筑物、地下管线等的影响。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"基坑支护结构设计是建（构）筑物设计，它不属深基础施工技术措施范畴。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"安全目标责任不须分解到岗、落实到人。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"特种作业人员除进行一般安全教育外，按国家、行业、地方和企业规定只要进行本工种专业培训后上岗。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"房屋建筑和市政基础设施工程实行以建设项目为单位参加工伤保险的，可在各项社会保险中优先办理参加工伤保险手续。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"施工现场应遵照《建筑施工场界环境噪声排放标准》GB12523制定降噪措施。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"作业人员等待吊笼时，应在建筑材料内或者平台内距安全门1m以内处等待。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"钢丝绳在运行过程中应速度稳定，不得超过负载运行，避免发生冲击负荷。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"扣件拧紧扭力矩应控制在65～80N•m的范围内。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"卸扣的使用时，不得超过规定的荷载，应使销轴与扣顶受力，不能横向受力。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"氧气瓶应设有防振圈和安全帽。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"物质的燃点越高，发生的危险性越大。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"国务院负责安全生产监督管理的部门依照《中华人民共和国安全生产法》的规定，对全国建设工程安全生产工作实施综合监督管理。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"履带式起重机不得在平坦坚实的地面上负荷行驶。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"电缆头的拆除与装配必须切断电源方可进行作业。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"铲运机按卸土方式分为强制式、半强制式和自由式三种。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"多个标志牌在一起设置时，应按禁止、警告、指令、提示类型的顺序，先左后右，先上后下的排列。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"吊装方形物体的四个吊点位置应在四边垂直的位置上。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"电工不需要特别的培训，只要懂得电气工作原理的人就可以在施工现场操作用电。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"离心水泵启动时，先将出水阀打开，启动后逐渐关闭。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"冬季宿舍应保持通风、干燥，有防蚊蝇措施，统一使用安全电压。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"《中华人民共和国安全生产法》第52条规定，“从业人员发现直接危及人身安全的紧急情况时，有权停止作业或者在采取可能的应急措施后撤离作业场所”。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"机械类专职安全生产管理人员在参加土建类安全生产管理专业考试合格后，可以申请取得综合类专职安全生产管理人员安全生产考核合格证书。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"建设工程实行施工总承包的，由监理单位对施工现场的安全生产负总责。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"吊装方形物体的四个吊点位置应在四边对称的位置上。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"离心水泵启动时，先将出水阀关闭，起动后逐渐打开。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"门式脚手架剪刀撑的设置要求和构造与扣件式钢管脚手架完全相同。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"上坡途中，如果内燃机突然熄灭，则不应立即放下铲刀，锁住制动踏板。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"施工现场经过有关部门的批准，采取减噪措施后可在夜间施工。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"盾构施工就是非开挖施工方法，是一种不开挖或者少开挖的管道埋设施工技术。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"保护零线的截面积应小于工作零线的截面积，同时必须满足机械强度的要求。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"施工单位对因建设工程施工可能造成损害的毗邻建筑物、构筑物和地下管线等，不应采取专项防护措施。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"塔式起重机起吊前，当吊物与地面或其他物件之间存在吸附力或摩擦力时，严禁起吊。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"轮胎式起重机的机动性仅次于汽车式起重机。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"安全生产费用是指企业按照规定标准提取，在成本中列支，专门用于完善和改进企业安全生产条件的资金。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"停电操作顺序为：总配电箱→开关箱→分配电箱。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"施工现场应设置吸烟室、饮水室，严禁在施工区域内吸烟。饮水室应设置密封式保温桶,保温桶应加盖加锁，保持卫生、清洁。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"工会有权依法参加事故调查，向有关部门提出处理意见，并要求追究有关人员的责任。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"建筑业的安全教育的重心、重点就是对外施队伍的安全生产教育。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"重大危险源控制的目的，是要预防重大事故发生，不必做到一旦发生事故，能将事故危害限制到最低程度。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"塔式起重机的电源一般采用220V；50Hz。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"未经安装验收或者经安装验收不合格的建筑起重机械，使用登记机关不予使用登记并无权责令使用单位立即停止使用或者拆除。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"装载机在高速行驶时应采用前两轮驱动。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                        {
+                            "que":"冲击荷载的大小和所吊重物落下距离成正比，一般静荷载远远大于冲击荷载若干倍。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"操作人员应该站在面对锯片旋转的离心力方向操作，手不得跨越锯片。",
+"list":"A.正确 B.错误",
+"answ":"B"
+                        },
+                        {
+                            "que":"配电箱、开关箱内常用的电器装置有隔离开关、断路器或熔断器以及漏电保护器。",
+"list":"A.正确 B.错误",
+"answ":"A"
+                        },
+                    ];
+        
+        function parseURL(url) {
+            var url = url.split("?")[1];
+            var para = url.split("&");
+            var len = para.length;
+            var res = {};
+            var arr = [];
+            for (var i = 0; i < len; i++) {
+                arr = para[i].split("=");
+                res[arr[0]] = arr[1];
+            }
+            return res;
+        }
+
+        function localcon () {
+             localhistory = JSON.parse(localStorage.getItem("pdhistory"));
+             errorhistory = JSON.parse(localStorage.getItem("pderror"));
+        }
+
+        function add () {
+            localStorage.setItem("pdhistory",JSON.stringify(localhistory));
+            localStorage.setItem("pderror",JSON.stringify(errorhistory));
+        }
+
+        let localhistory , errorhistory;
+        let obj = parseURL(window.location.href);
+        --obj.num;
+        let objresult = panduanlist[obj.num];
+        let ti = obj.num + 1 + '.' + objresult.que;
+        // alert(obj.num)
+        let listxuan = objresult.list.split(" ");
+        let answ = objresult.answ;
+        console.log(listxuan);
+        $(".ti").html(ti);
+        for(var i = 0; i < listxuan.length; i++){
+            $(".xuan").append(`<div class="list">${listxuan[i]}</div>`);
+        }
+
+        $(".next").click(function(){
+            localcon();
+            // alert($(".re1").hasClass("red"));
+            if($(".re1").hasClass("red")){
+                errorhistory.push(obj.num);
+            }
+            localhistory.push(obj.num);
+            add();
+            if(obj.num == 96){
+                window.location.href = "index.html";
+            }else{
+                window.location.href = "./tipanduan.html?num=" + parseInt( parseInt(obj.num)+ 2);
+            }    
+        })
+
+
+        // $(".list").click(function(e){
+        //     $(".list").removeClass("orange");
+        //     $(e.target).addClass("orange");
+        //     $(".next").addClass("show");
+        //     if(String(e.target.innerText).slice(0,1) == answ){
+        //         $(".re1").removeClass("green");
+        //         $(".re1").removeClass("red");
+        //         $(".re1").html("做对了");
+        //         $(".re1").addClass("green");
+        //         $(".re2").html("答案:" + answ);
+        //     }else{
+        //         $(".re1").removeClass("green");
+        //         $(".re1").removeClass("red");
+        //         $(".re1").html("做错了");
+        //         $(".re1").addClass("red");
+        //         $(".re2").html("答案:" + answ);
+        //     }
+        //     // if(String(e.target.innerText))
+        // })
+
+        let resultFina ;
+        $(".list").click(function(e){
+            $(".list").removeClass("orange");
+            $(e.target).addClass("orange");
+            // $(".next").addClass("show");
+            if(String(e.target.innerText).slice(0,1) == answ){
+                $(".re1").removeClass("green");
+                $(".re1").removeClass("red");
+                resultFina = true;
+                // $(".re1").html("做对了");
+                // $(".re1").addClass("green");
+                // $(".re2").html("答案:" + answ);
+            }else{
+                $(".re1").removeClass("green");
+                $(".re1").removeClass("red");
+                resultFina = false;
+                // $(".re1").html("做错了");
+                // $(".re1").addClass("red");
+                // $(".re2").html("答案:" + answ);
+            }
+            // if(String(e.target.innerText))
+        })
+        $(".submit").click(function(){
+            if(resultFina == true){
+                $(".re1").html("做对了");
+                $(".re1").addClass("green");
+                $(".re2").html("答案:" + answ);
+            }else{
+                $(".re1").html("做错了");
+                $(".re1").addClass("red");
+                $(".re2").html("答案:" + answ);
+            }
+            $(".next").addClass("show");
+        })
+    </script>
+</body>
+
+</html>
